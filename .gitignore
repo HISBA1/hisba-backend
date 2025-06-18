@@ -1,10 +1,7 @@
-<<<<<<< HEAD
 *.env
 env/
 *.pyc
-
-=======
->>>>>>> 6e56142a5807e94e0578470a70a7fcaba63e3f9a
+*.log
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
