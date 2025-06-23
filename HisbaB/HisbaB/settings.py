@@ -1,6 +1,8 @@
 from pathlib import Path
 from datetime import timedelta
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t_ln!eo&105(#*8qf1s*595z!9%4$whv35l9hpze#-a_=zn0z)'
 STRIPE_SECRET_KEY = 'django-insecure-t_ln!eo&105(#*8qf1s*595z!9%4$whv35l9hpze#-a_=zn0z)'
@@ -60,10 +62,19 @@ WSGI_APPLICATION = 'HisbaB.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+        'OPTIONS': {
+            'sslmode': 'require',
+        }
     }
 }
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
