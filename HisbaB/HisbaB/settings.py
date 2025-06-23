@@ -148,24 +148,48 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
     'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'debug.log',
+        'console': {
+            'level': 'INFO',  # يمكنك تغييرها إلى 'DEBUG' إذا أردت المزيد من التفاصيل
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose', # استخدم 'verbose' لرؤية تفاصيل أكثر
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-            'propagate': True,
+            'handlers': ['console'],
+            'level': 'INFO', # أو 'DEBUG'
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'ERROR', # لكي تظهر أخطاء الطلبات فقط
+            'propagate': False,
+        },
+        'django.db.backends': { # لإظهار أخطاء قاعدة البيانات
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        '': { # Root logger - يلتقط أي شيء لم يتم التقاطه بواسطة loggers أخرى
+            'handlers': ['console'],
+            'level': 'INFO', # أو 'DEBUG'
         },
     },
 }
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
