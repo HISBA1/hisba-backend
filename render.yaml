@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: HisbaB
+    runtime: python
+    pythonVersion: 3.12
